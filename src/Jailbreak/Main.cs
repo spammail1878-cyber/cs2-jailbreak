@@ -1,4 +1,4 @@
-﻿using CounterStrikeSharp.API;
+using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Core.Attributes;
 using CounterStrikeSharp.API.Modules.Commands;
@@ -370,11 +370,9 @@ public class JailPlugin : BasePlugin, IPluginConfig<JailConfig>
         RegisterEventHandler<EventWeaponZoom>(OnWeaponZoom);
         RegisterEventHandler<EventPlayerPing>(OnPlayerPing);
 
-        // take damage causes crashes on windows
-        // cant figure out why because the windows cs2 console wont log
-        // before it dies
-        if (!Lib.IsWindows())
-            VirtualFunctions.CBaseEntity_TakeDamageOldFunc.Hook(OnTakeDamage, HookMode.Pre);
+        // Damage hook disabled for CounterStrikeSharp v369 compatibility.
+        // CSS v369 removed VirtualFunctions.CBaseEntity_TakeDamageOldFunc.
+        // This allows the plugin to compile/load, but damage-modifying features may be limited.
 
         HookEntityOutput("func_button", "OnPressed", OnButtonPressed);
 
@@ -442,7 +440,7 @@ public class JailPlugin : BasePlugin, IPluginConfig<JailConfig>
 
     public override void Unload(bool hotReload)
     {
-        VirtualFunctions.CBaseEntity_TakeDamageOldFunc.Unhook(OnTakeDamage, HookMode.Pre);
+        // Damage hook disabled for CounterStrikeSharp v369 compatibility.
     }
 
     HookResult OnGrenadeThrown(EventGrenadeThrown @event, GameEventInfo info)
