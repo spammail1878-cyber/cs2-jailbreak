@@ -374,7 +374,7 @@ public class JailPlugin : BasePlugin, IPluginConfig<JailConfig>
         // cant figure out why because the windows cs2 console wont log
         // before it dies
         if (!Lib.IsWindows())
-            VirtualFunctions.CBaseEntity_TakeDamageOldFunc.Hook(OnTakeDamage, HookMode.Pre);
+            VirtualFunctions.CBaseEntity_TakeDamageOld.Hook(OnTakeDamage, HookMode.Pre);
 
         HookEntityOutput("func_button", "OnPressed", OnButtonPressed);
 
@@ -442,7 +442,7 @@ public class JailPlugin : BasePlugin, IPluginConfig<JailConfig>
 
     public override void Unload(bool hotReload)
     {
-        VirtualFunctions.CBaseEntity_TakeDamageOldFunc.Unhook(OnTakeDamage, HookMode.Pre);
+        VirtualFunctions.CBaseEntity_TakeDamageOld.Unhook(OnTakeDamage, HookMode.Pre);
     }
 
     HookResult OnGrenadeThrown(EventGrenadeThrown @event, GameEventInfo info)
